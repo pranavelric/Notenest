@@ -14,8 +14,8 @@ data class ArchiveModel (
     var title: String,
     var description: String,
     var color: Int,
-    var sketches: Int,
-    var files: String,
+    var sketches: Int?,
+    var files: String?,
     val lastModified:String
 
 

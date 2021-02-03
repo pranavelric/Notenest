@@ -20,12 +20,35 @@
 
             android:id="@+id/action_home_to_createNoteFragment"
             app:destination="@id/createNoteFragment" />
+        <action
+
+
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+
+
+            android:id="@+id/action_home_to_updateNoteFragment"
+            app:destination="@id/updateNoteFragment" />
     </fragment>
     <fragment
         android:id="@+id/archive"
         android:name="com.note.notenest.ui.archive.ArchiveFragment"
         android:label="Archive"
-        tools:layout="@layout/fragment_archive" />
+        tools:layout="@layout/fragment_archive" >
+        <action
+
+
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+
+
+            android:id="@+id/action_archive_to_updateArchiveFragment"
+            app:destination="@id/updateArchiveFragment" />
+    </fragment>
     <fragment
         android:id="@+id/settings"
         android:name="com.note.notenest.ui.settings.SettingsFragment"
@@ -35,7 +58,18 @@
         android:id="@+id/trash"
         android:name="com.note.notenest.ui.trash.TrashFragment"
         android:label="Trash bin"
-        tools:layout="@layout/fragment_trash" />
+        tools:layout="@layout/fragment_trash" >
+        <action
+
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+
+
+            android:id="@+id/action_trash_to_updateTrashFragment"
+            app:destination="@id/updateTrashFragment" />
+    </fragment>
     <fragment
         android:id="@+id/createNoteFragment"
         android:name="com.note.notenest.ui.home.createNote.CreateNoteFragment"
@@ -50,6 +84,11 @@
         android:name="com.note.notenest.ui.home.updateNote.UpdateNoteFragment"
         android:label="fragment_update_note"
         tools:layout="@layout/fragment_update_note" />
+    <fragment
+        android:id="@+id/updateTrashFragment"
+        android:name="com.note.notenest.ui.trash.updateTrash.UpdateTrashFragment"
+        android:label="fragment_update_trash"
+        tools:layout="@layout/fragment_update_trash" />
 
 
 </navigation>

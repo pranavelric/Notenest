@@ -1,20 +1,31 @@
 package com.note.notenest.ui.home
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.note.notenest.R
 import com.note.notenest.adapters.NoteAdapter
+import com.note.notenest.data.models.ArchiveModel
 import com.note.notenest.data.models.NoteModel
+import com.note.notenest.data.models.TrashModel
 import com.note.notenest.databinding.FragmentHomeBinding
 import com.note.notenest.utils.Constants
+import com.note.notenest.utils.Constants.NOTE_TO_ARCHIVE
+import com.note.notenest.utils.Constants.NOTE_TO_TRASH
+import com.note.notenest.utils.Constants.SWIPE_ARCHIVE
+import com.note.notenest.utils.Constants.SWIPE_DELETE
 import com.note.notenest.utils.MySharedPrefrences
+import com.note.notenest.utils.SwipeItem
 import com.note.notenest.utils.hideSoftKeyboard
 import com.note.notenest.viewModels.NoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -147,9 +158,9 @@ class HomeFragment : Fragment() {
                 sortRecyclerView(Constants.SORT_BY_COLOR)
             }
             R.id.menu_main_delete_all -> {
-             //   noteViewModel.deleteAllNotesItem()
+                //   noteViewModel.deleteAllNotesItem()
 
-                context?.let { noteViewModel.emptyDatabase(it,Constants.NOTE_EMPTY) }
+                context?.let { noteViewModel.emptyDatabase(it, Constants.NOTE_EMPTY) }
 
             }
 
@@ -201,8 +212,91 @@ class HomeFragment : Fragment() {
         }
         binding?.notesRec?.apply {
             adapter = noteAdapter
+
         }
         binding?.notesRec?.scheduleLayoutAnimation()
+
+
+        swipeToDeleteOrArchive(Constants.SWIPE_DELETE)
+        swipeToDeleteOrArchive(Constants.SWIPE_ARCHIVE)
+
+
+    }
+
+    private fun swipeToDeleteOrArchive(action: Int) {
+        lateinit var background: Drawable
+        lateinit var icon: Drawable
+
+        when (action) {
+            SWIPE_DELETE -> {
+                background =
+                    ResourcesCompat.getDrawable(resources, R.drawable.bg_swipe_delete, null)!!
+                icon =
+                    ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_delete_24, null)!!
+            }
+            SWIPE_ARCHIVE -> {
+                background =
+                    ResourcesCompat.getDrawable(resources, R.drawable.bg_swipe_archive, null)!!
+                icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_archive, null)!!
+            }
+        }
+
+        val swipeToDeleteCallBack = object : SwipeItem(action, background, icon, requireContext()) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+
+                val noteItem = noteAdapter.currentList[viewHolder.adapterPosition]
+                val archiveItem = ArchiveModel(
+                    noteAdapter.currentList[viewHolder.adapterPosition].id,
+                    noteAdapter.currentList[viewHolder.adapterPosition].title,
+                    noteAdapter.currentList[viewHolder.adapterPosition].description,
+
+                    noteAdapter.currentList[viewHolder.adapterPosition].color,
+
+                    noteAdapter.currentList[viewHolder.adapterPosition].sketches,
+                    noteAdapter.currentList[viewHolder.adapterPosition].files,
+                    noteAdapter.currentList[viewHolder.adapterPosition].lastModified
+
+
+                )
+                val trashItem = TrashModel(
+                    noteAdapter.currentList[viewHolder.adapterPosition].id,
+                    noteAdapter.currentList[viewHolder.adapterPosition].title,
+                    noteAdapter.currentList[viewHolder.adapterPosition].description,
+                    noteAdapter.currentList[viewHolder.adapterPosition].color,
+                    noteAdapter.currentList[viewHolder.adapterPosition].sketches,
+                    noteAdapter.currentList[viewHolder.adapterPosition].files,
+                    noteAdapter.currentList[viewHolder.adapterPosition].lastModified
+                )
+
+
+                when (action) {
+                    SWIPE_ARCHIVE -> noteViewModel.moveItem(
+                        NOTE_TO_ARCHIVE,
+                        noteItem,
+                        archiveItem,
+                        trashItem,
+                        requireView()
+                    )
+                    SWIPE_DELETE -> noteViewModel.moveItem(
+                        NOTE_TO_TRASH,
+                        noteItem,
+                        archiveItem,
+                        trashItem,
+                        requireView()
+                    )
+                }
+
+
+                noteAdapter.notifyItemRemoved(viewHolder.adapterPosition)
+
+
+            }
+
+
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeToDeleteCallBack)
+        itemTouchHelper.attachToRecyclerView(binding?.notesRec)
+
 
     }
 
