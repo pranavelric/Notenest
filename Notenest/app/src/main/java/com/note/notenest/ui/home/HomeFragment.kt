@@ -75,11 +75,14 @@ class HomeFragment : Fragment() {
 
         noteViewModel.getNoteList().observe(viewLifecycleOwner, {
             it?.let { data ->
-                noteAdapter.submitList(data)
+                  noteAdapter.submitList(data)
+
             }
 
 
         })
+
+
 
     }
 
@@ -287,7 +290,10 @@ class HomeFragment : Fragment() {
                 }
 
 
+
                 noteAdapter.notifyItemRemoved(viewHolder.adapterPosition)
+
+
 
 
             }

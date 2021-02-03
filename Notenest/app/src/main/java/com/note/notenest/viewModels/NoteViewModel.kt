@@ -130,6 +130,8 @@ class NoteViewModel @ViewModelInject constructor(val myRepo: NoteRepository) : V
         trashItem: TrashModel,
         view: View
     ) {
+
+
         lateinit var message: String
 
         // Set message.
@@ -222,7 +224,7 @@ class NoteViewModel @ViewModelInject constructor(val myRepo: NoteRepository) : V
                     }.show()
 
                     view.findNavController().navigateUp()
-                   //     .navigate(R.id.action_trashUpdateFragment_to_trashFragment)
+                    //     .navigate(R.id.action_trashUpdateFragment_to_trashFragment)
                 }
             }
         }
@@ -230,6 +232,8 @@ class NoteViewModel @ViewModelInject constructor(val myRepo: NoteRepository) : V
 //        snackBar.setActionTextColor(
 //            ActivityCompat.getColor(getApplication(), R.color.snackBarActionColor)
 //        ).show()
+
+        snackBar.show()
 
     }
 
