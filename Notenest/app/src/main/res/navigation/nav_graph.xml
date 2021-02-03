@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/home">
+
+    <fragment
+        android:id="@+id/home"
+        android:name="com.note.notenest.ui.home.HomeFragment"
+        android:label="Notes" >
+        <action
+
+
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+
+
+            android:id="@+id/action_home_to_createNoteFragment"
+            app:destination="@id/createNoteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/archive"
+        android:name="com.note.notenest.ui.archive.ArchiveFragment"
+        android:label="Archive"
+        tools:layout="@layout/fragment_archive" />
+    <fragment
+        android:id="@+id/settings"
+        android:name="com.note.notenest.ui.settings.SettingsFragment"
+        android:label="Settings"
+        tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/trash"
+        android:name="com.note.notenest.ui.trash.TrashFragment"
+        android:label="Trash bin"
+        tools:layout="@layout/fragment_trash" />
+    <fragment
+        android:id="@+id/createNoteFragment"
+        android:name="com.note.notenest.ui.home.createNote.CreateNoteFragment"
+        android:label="Create notes" />
+    <fragment
+        android:id="@+id/updateArchiveFragment"
+        android:name="com.note.notenest.ui.archive.updateArchiveNotes.UpdateArchiveFragment"
+        android:label="fragment_update_archive"
+        tools:layout="@layout/fragment_update_archive" />
+    <fragment
+        android:id="@+id/updateNoteFragment"
+        android:name="com.note.notenest.ui.home.updateNote.UpdateNoteFragment"
+        android:label="fragment_update_note"
+        tools:layout="@layout/fragment_update_note" />
+
+
+</navigation>

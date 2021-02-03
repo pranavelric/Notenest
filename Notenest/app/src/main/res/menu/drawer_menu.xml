@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:id="@+id/grp1"  android:checkableBehavior="single" >
+        <item
+            android:id="@+id/home"
+
+            android:icon="@drawable/ic_home"
+            android:title="Notes" />
+        <item
+            android:id="@+id/archive"
+
+            android:icon="@drawable/ic_archive"
+            android:title="Archive" />
+        <item
+            android:id="@+id/trash"
+
+            android:icon="@drawable/ic_baseline_delete_24"
+            android:title="Trash" />
+
+
+    </group>
+
+    <group android:id="@+id/grp2"  android:checkableBehavior="single" >
+        <item
+            android:id="@+id/share"
+            android:icon="@drawable/ic_share"
+            android:title="Tell Friends" />
+        <item
+            android:id="@+id/rate"
+
+            android:icon="@drawable/ic_star"
+            android:title="Rate app" />
+
+    </group>
+
+
+    <group android:id="@+id/grp3"  android:checkableBehavior="single" >
+        <item
+            android:id="@+id/settings"
+            android:icon="@drawable/ic_baseline_settings_24"
+            android:title="Settings" />
+
+    </group>
+
+
+
+
+</menu>
