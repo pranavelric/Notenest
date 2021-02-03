@@ -1,13 +1,20 @@
 package com.note.notenest.viewModels
 
+import android.content.Context
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.afollestad.materialdialogs.LayoutMode
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.bottomsheets.BottomSheet
+import com.note.notenest.R
 import com.note.notenest.data.models.NoteModel
 import com.note.notenest.data.models.TrashModel
 import com.note.notenest.data.repository.NoteRepository
+import com.note.notenest.utils.Constants
+import com.note.notenest.utils.Constants.NOTE_EMPTY
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -29,7 +36,7 @@ class NoteViewModel @ViewModelInject constructor(val myRepo: NoteRepository) : V
     fun getNoteListSortedByColor() = myRepo.sortNotesByColor
     fun getNoteListSortedByCreation() = myRepo.sortNotesByCreation
     fun getNoteListSortedByTitle() = myRepo.sortNotesByTitle
-    fun deleteAllNotesItem() = viewModelScope.launch {
+    private fun deleteAllNotesItem() = viewModelScope.launch {
         myRepo.deleteNoteDatabase()
     }
 
@@ -41,8 +48,48 @@ class NoteViewModel @ViewModelInject constructor(val myRepo: NoteRepository) : V
     }
 
 
-    fun addTrashItem(trashModel: TrashModel) = viewModelScope.launch {
-        myRepo.insertTrashItem(trashModel)
+    private fun deleteArchiveDatabase() = viewModelScope.launch {
+        myRepo.deleteArchiveDatabase()
+    }
+
+    private fun deleteTrashDatabase() = viewModelScope.launch {
+        myRepo.deleteTrashDatabase()
+    }
+
+
+    fun emptyDatabase(context: Context, database: String) {
+
+        val dialog = MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT))
+
+        when (database) {
+            Constants.TRASH_EMPTY -> {
+                dialog.show {
+                    icon(R.drawable.ic_delete_all)
+                    title(R.string.dialog_empty_trash)
+                    message(R.string.dialog_delete_confirmation_trash)
+                    positiveButton(R.string.dialog_empty_trash) {
+                        deleteTrashDatabase()
+                    }
+                    negativeButton(R.string.dialog_negative)
+                }
+            }
+            else -> {
+                dialog.show {
+                    icon(R.drawable.ic_delete_all)
+                    title(R.string.dialog_delete_all)
+                    message(R.string.dialog_delete_confirmation)
+                    positiveButton(R.string.dialog_confirmation) {
+                        when (database) {
+                            // Delete database.
+                            Constants.NOTE_EMPTY -> deleteAllNotesItem()
+                            Constants.ARCHIVE_EMPTY -> deleteArchiveDatabase()
+                        }
+
+                    }
+                    negativeButton(R.string.dialog_negative)
+                }
+            }
+        }
     }
 
 

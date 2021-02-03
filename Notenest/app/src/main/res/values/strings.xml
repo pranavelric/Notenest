@@ -8,4 +8,8 @@
     <string name="dialog_discard">Discard?</string>
     <string name="dialog_discard_confirmation">Are you sure? Your changes won\'t be saved. </string>
     <string name="dialog_confirmation">yes</string>
+    <string name="dialog_empty_trash">Empty trash</string>
+    <string name="dialog_delete_confirmation">Are you sure? This will permanently delete all item from database.</string>
+    <string name="dialog_delete_all">Delete All</string>
+    <string name="dialog_delete_confirmation_trash">Are you sure? This will permanently delete all item from trash can.</string>
 </resources>

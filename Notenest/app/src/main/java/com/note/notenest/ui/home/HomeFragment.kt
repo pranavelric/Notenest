@@ -147,7 +147,10 @@ class HomeFragment : Fragment() {
                 sortRecyclerView(Constants.SORT_BY_COLOR)
             }
             R.id.menu_main_delete_all -> {
-                noteViewModel.deleteAllNotesItem()
+             //   noteViewModel.deleteAllNotesItem()
+
+                context?.let { noteViewModel.emptyDatabase(it,Constants.NOTE_EMPTY) }
+
             }
 
         }
