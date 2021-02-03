@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,9 +13,9 @@ import com.note.notenest.R
 import com.note.notenest.adapters.NoteAdapter
 import com.note.notenest.data.models.NoteModel
 import com.note.notenest.databinding.FragmentHomeBinding
+import com.note.notenest.utils.Constants
 import com.note.notenest.utils.MySharedPrefrences
 import com.note.notenest.utils.hideSoftKeyboard
-import com.note.notenest.utils.toast
 import com.note.notenest.viewModels.NoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -137,28 +138,48 @@ class HomeFragment : Fragment() {
             R.id.menu_main_list -> changeLayoutView(true)
             R.id.menu_main_grid -> changeLayoutView(false)
             R.id.menu_main_sort_title -> {
-                context?.toast("sorty by title")
+                sortRecyclerView(Constants.SORT_BY_TITLE)
             }
             R.id.menu_main_sort_creation -> {
-                context?.toast("sorty by creation")
+                sortRecyclerView(Constants.SORT_BY_CREATION)
             }
             R.id.menu_main_sort_color -> {
-                context?.toast("sorty by color")
+                sortRecyclerView(Constants.SORT_BY_COLOR)
             }
             R.id.menu_main_delete_all -> {
-                context?.toast("sorty by delete all")
+                noteViewModel.deleteAllNotesItem()
             }
 
         }
 
-
-
-
-
-
         return super.onOptionsItemSelected(item)
     }
 
+    private fun sortRecyclerView(sortBy: String) {
+
+
+        binding?.notesRec?.scheduleLayoutAnimation()
+
+        getSortingMehod(sortBy).observe(viewLifecycleOwner, {
+            it?.let { data ->
+                noteAdapter.submitList(data)
+            }
+
+        })
+
+
+    }
+
+
+    fun getSortingMehod(sortBy: String): LiveData<List<NoteModel>> {
+        return when (sortBy) {
+            Constants.SORT_BY_TITLE -> noteViewModel.getNoteListSortedByTitle()
+            Constants.SORT_BY_COLOR -> noteViewModel.getNoteListSortedByColor()
+            Constants.SORT_BY_CREATION -> noteViewModel.getNoteListSortedByCreation()
+            else -> noteViewModel.getNoteListSortedByTitle()
+        }
+
+    }
 
     private fun changeLayoutView(change: Boolean) {
         sharedPref.setNotesLayout(change)
@@ -166,34 +187,27 @@ class HomeFragment : Fragment() {
 
         setupRecyclerView()
         requireActivity().invalidateOptionsMenu()
-        //   invalidateOptionsMenu(requireActivity())
+
     }
 
     private fun setupRecyclerView() {
-
-        // Set layout view.
         when (sharedPref.getNotesLayout()) {
             true -> binding?.notesRec?.layoutManager = LinearLayoutManager(context)
             false -> binding?.notesRec?.layoutManager =
                 StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         }
-
         binding?.notesRec?.apply {
             adapter = noteAdapter
         }
-
-            binding?.notesRec?.scheduleLayoutAnimation()
-
-
+        binding?.notesRec?.scheduleLayoutAnimation()
 
     }
 
     private fun searchTroughDatabase(query: String) {
-//        noteViewModel.searchDatabase("%$query%").observe(this, { list ->
-//            list?.let { adapter.setData(it) }
-//        })
+        noteViewModel.searchDatabase(query).observe(this, { list ->
+            list?.let { noteAdapter.submitList(it) }
+        })
 
-        context?.toast("Search function")
     }
 
 

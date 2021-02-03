@@ -8,6 +8,12 @@ object Constants {
     const val REQUEST_SELECT = 2
     const val SHARED_PREF = "SHARED_PREF"
 
+    const val SORT_BY_COLOR="COLOR"
+    const val SORT_BY_CREATION="CREATION"
+    const val SORT_BY_TITLE="TITLE"
+
+
+
     const val NOTE_TO_ARCHIVE = "note_to_archive"
     const val NOTE_TO_TRASH = "note_to_trash"
     const val NOTE_EMPTY = "note_to_empty"
