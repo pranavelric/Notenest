@@ -1,6 +1,8 @@
 package com.note.notenest.viewModels
 
 import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.note.notenest.data.models.NoteModel
@@ -13,15 +15,15 @@ import javax.inject.Inject
 class NoteViewModel @ViewModelInject constructor(val myRepo: NoteRepository) : ViewModel() {
 
 
-    
+    private val _noteList = MutableLiveData<List<NoteModel>>()
+    val noteListLiveData: LiveData<List<NoteModel>> = _noteList
 
 
     fun addNoteItem(noteModel: NoteModel) = viewModelScope.launch {
         myRepo.insertNoteItem(noteModel)
     }
 
-
-
+    fun getNoteList() = myRepo.getNoteDatabase
 
 
 

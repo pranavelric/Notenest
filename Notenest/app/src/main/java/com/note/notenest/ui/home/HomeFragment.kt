@@ -4,22 +4,38 @@ import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.note.notenest.R
+import com.note.notenest.adapters.NoteAdapter
+import com.note.notenest.data.models.NoteModel
 import com.note.notenest.databinding.FragmentHomeBinding
 import com.note.notenest.utils.MySharedPrefrences
 import com.note.notenest.utils.hideSoftKeyboard
 import com.note.notenest.utils.toast
+import com.note.notenest.viewModels.NoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
+
+    private val noteViewModel: NoteViewModel by lazy {
+        ViewModelProvider(this)[NoteViewModel::class.java]
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
     }
+
+    @Inject
+    lateinit var noteAdapter: NoteAdapter
+
 
     @Inject
     lateinit var sharedPref: MySharedPrefrences
@@ -36,10 +52,23 @@ class HomeFragment : Fragment() {
 
         setHasOptionsMenu(true)
         requireActivity().hideSoftKeyboard()
-
+        getNoteData()
+        setupRecyclerView()
         setClickListeneres()
 
         return binding!!.root
+    }
+
+    private fun getNoteData() {
+
+        noteViewModel.getNoteList().observe(viewLifecycleOwner, {
+            it?.let { data ->
+                noteAdapter.submitList(data)
+            }
+
+
+        })
+
     }
 
     private fun setClickListeneres() {
@@ -133,10 +162,30 @@ class HomeFragment : Fragment() {
 
     private fun changeLayoutView(change: Boolean) {
         sharedPref.setNotesLayout(change)
-        //  adapter.notifyDataSetChanged()
-        // setupRecyclerView()
+        noteAdapter.notifyDataSetChanged()
+
+        setupRecyclerView()
         requireActivity().invalidateOptionsMenu()
         //   invalidateOptionsMenu(requireActivity())
+    }
+
+    private fun setupRecyclerView() {
+
+        // Set layout view.
+        when (sharedPref.getNotesLayout()) {
+            true -> binding?.notesRec?.layoutManager = LinearLayoutManager(context)
+            false -> binding?.notesRec?.layoutManager =
+                StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        }
+
+        binding?.notesRec?.apply {
+            adapter = noteAdapter
+        }
+
+            binding?.notesRec?.scheduleLayoutAnimation()
+
+
+
     }
 
     private fun searchTroughDatabase(query: String) {
