@@ -77,17 +77,17 @@
     <fragment
         android:id="@+id/updateArchiveFragment"
         android:name="com.note.notenest.ui.archive.updateArchiveNotes.UpdateArchiveFragment"
-        android:label="fragment_update_archive"
+        android:label="Update archive"
         tools:layout="@layout/fragment_update_archive" />
     <fragment
         android:id="@+id/updateNoteFragment"
         android:name="com.note.notenest.ui.home.updateNote.UpdateNoteFragment"
-        android:label="fragment_update_note"
+        android:label="Update Note"
         tools:layout="@layout/fragment_update_note" />
     <fragment
         android:id="@+id/updateTrashFragment"
         android:name="com.note.notenest.ui.trash.updateTrash.UpdateTrashFragment"
-        android:label="fragment_update_trash"
+        android:label="Update trash"
         tools:layout="@layout/fragment_update_trash" />
 
 

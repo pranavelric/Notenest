@@ -22,14 +22,6 @@ class MySharedPrefrences @Inject constructor(@ApplicationContext context: Contex
         editor.commit()
     }
 
-//    fun setIsOnBoardingCompleted() {
-//        editor.putBoolean(Constants.IS_ONBOARDING_COMPLETED, true)
-//        editor.commit()
-//    }
-//
-//    fun getIsOnBoardingCompleted(): Boolean {
-//        return sp.getBoolean(Constants.IS_ONBOARDING_COMPLETED, false)
-//    }
 
     fun setNotesLayout(value: Boolean) {
         editor.putBoolean(Constants.NOTE_LAYOUT, value)
@@ -40,5 +32,14 @@ class MySharedPrefrences @Inject constructor(@ApplicationContext context: Contex
         return sp.getBoolean(Constants.NOTE_LAYOUT, false)
     }
 
+
+    fun setArchiveLayout(value: Boolean) {
+        editor.putBoolean(Constants.ARCHIVE_LAYOUT, value)
+        editor.commit()
+    }
+
+    fun getArchiveLayout(): Boolean {
+        return sp.getBoolean(Constants.ARCHIVE_LAYOUT, false)
+    }
 
 }

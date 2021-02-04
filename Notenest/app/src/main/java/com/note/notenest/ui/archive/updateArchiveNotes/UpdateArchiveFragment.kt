@@ -6,9 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.note.notenest.R
+import com.note.notenest.adapters.ArchiveAdapter
+import com.note.notenest.databinding.FragmentUpdateArchiveBinding
+import com.note.notenest.ui.main.MainActivity
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class UpdateArchiveFragment : Fragment() {
 
+
+    lateinit var binding: FragmentUpdateArchiveBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -19,8 +27,11 @@ class UpdateArchiveFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        return inflater.inflate(R.layout.fragment_update_archive, container, false)
+        binding = FragmentUpdateArchiveBinding.inflate(inflater, container, false)
+
+        return binding.root
     }
+
 
 
 }

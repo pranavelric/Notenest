@@ -12,7 +12,7 @@ import java.io.File
 @BindingAdapter("imageUrl")
 fun loadImage(view: ImageView, url: String?) {
 
-    Log.d("RRR", "loadImage: " + url)
+
 if(url!=null) {
 
     Glide.with(view).load(url).into(view)

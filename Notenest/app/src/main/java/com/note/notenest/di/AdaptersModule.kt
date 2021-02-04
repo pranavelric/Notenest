@@ -1,5 +1,6 @@
 package com.note.notenest.di
 
+import com.note.notenest.adapters.ArchiveAdapter
 import com.note.notenest.adapters.NoteAdapter
 import dagger.Module
 import dagger.Provides
@@ -15,5 +16,11 @@ class AdaptersModule {
     fun providesNoteAdapter(): NoteAdapter {
         return NoteAdapter()
     }
+
+    @Provides
+    fun providesArchiveNoteAdapter(): ArchiveAdapter {
+        return ArchiveAdapter()
+    }
+
 
 }

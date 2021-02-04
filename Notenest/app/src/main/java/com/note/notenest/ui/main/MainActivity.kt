@@ -1,24 +1,28 @@
 package com.note.notenest.ui.main
 
 
-import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.note.notenest.R
 import com.note.notenest.databinding.ActivityMainBinding
-import com.note.notenest.utils.Constants
-import com.note.notenest.utils.toast
+import com.note.notenest.viewModels.NoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+
+     val noteViewModel: NoteViewModel by lazy {
+        ViewModelProvider(this)[NoteViewModel::class.java]
+    }
 
     val navController: NavController by lazy {
         findNavController(R.id.fragment)

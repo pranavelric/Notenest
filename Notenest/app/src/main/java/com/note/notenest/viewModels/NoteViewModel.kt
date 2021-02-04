@@ -1,10 +1,10 @@
 package com.note.notenest.viewModels
 
 import android.content.Context
+import android.util.Log
 import android.view.View
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
@@ -20,29 +20,23 @@ import com.note.notenest.data.repository.NoteRepository
 import com.note.notenest.utils.Constants
 import com.note.notenest.utils.Constants.ARCHIVE_TO_NOTE
 import com.note.notenest.utils.Constants.ARCHIVE_TO_TRASH
-import com.note.notenest.utils.Constants.NOTE_EMPTY
 import com.note.notenest.utils.Constants.NOTE_TO_ARCHIVE
 import com.note.notenest.utils.Constants.NOTE_TO_TRASH
 import com.note.notenest.utils.Constants.TRASH_TO_NOTE
 import com.note.notenest.utils.Constants.TRASH_TO_NOTE_EDIT
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 
 class NoteViewModel @ViewModelInject constructor(val myRepo: NoteRepository) : ViewModel() {
 
 
-    private val _noteList = MutableLiveData<List<NoteModel>>()
-    val noteListLiveData: LiveData<List<NoteModel>> = _noteList
-
-
     fun addNoteItem(noteModel: NoteModel) = viewModelScope.launch {
         myRepo.insertNoteItem(noteModel)
+
+        //Log.d("RRR", "moveItem: ${noteModel} sadsa")
     }
 
     fun getNoteList() = myRepo.getNoteDatabase
-
     fun getNoteListSortedByColor() = myRepo.sortNotesByColor
     fun getNoteListSortedByCreation() = myRepo.sortNotesByCreation
     fun getNoteListSortedByTitle() = myRepo.sortNotesByTitle
@@ -54,6 +48,11 @@ class NoteViewModel @ViewModelInject constructor(val myRepo: NoteRepository) : V
         myRepo.deleteNoteItem(noteModel)
     }
 
+    fun UpdateNote(noteModel: NoteModel) = viewModelScope.launch {
+        myRepo.updateNoteItem(noteModel)
+    }
+
+
     fun searchDatabase(query: String): LiveData<List<NoteModel>> {
         if (query != "")
             return myRepo.searchNoteDatabase("%" + query + "%")
@@ -61,6 +60,21 @@ class NoteViewModel @ViewModelInject constructor(val myRepo: NoteRepository) : V
             return myRepo.getNoteDatabase
     }
 
+
+
+
+
+    fun searchArchiveDatabase(query: String): LiveData<List<ArchiveModel>> {
+        if (query != "")
+            return myRepo.searchArchiveDatabase("%" + query + "%")
+        else
+            return myRepo.getArchiveDatabase
+    }
+
+    fun getArchiveItem() = myRepo.getArchiveDatabase
+    fun updateArchiveItem(archiveItem: ArchiveModel) = viewModelScope.launch {
+        myRepo.updateArchiveItem(archiveItem)
+    }
 
     private fun addArchiveItem(archiveItem: ArchiveModel) = viewModelScope.launch {
         myRepo.insertArchiveItem(archiveItem)
@@ -161,12 +175,14 @@ class NoteViewModel @ViewModelInject constructor(val myRepo: NoteRepository) : V
                     addNoteItem(noteItem)
                     deleteArchiveItem(archiveItem)
                 }
+
             }
             NOTE_TO_TRASH -> {
                 deleteNoteItem(noteItem)
                 addTrashItem(trashItem)
 
                 snackBar.setAction("Undo") {
+
                     addNoteItem(noteItem)
                     deleteTrashItem(trashItem)
                 }
@@ -228,13 +244,7 @@ class NoteViewModel @ViewModelInject constructor(val myRepo: NoteRepository) : V
                 }
             }
         }
-
-//        snackBar.setActionTextColor(
-//            ActivityCompat.getColor(getApplication(), R.color.snackBarActionColor)
-//        ).show()
-
         snackBar.show()
-
     }
 
 

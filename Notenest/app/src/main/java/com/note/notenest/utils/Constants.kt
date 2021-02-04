@@ -4,6 +4,10 @@ import androidx.recyclerview.widget.ItemTouchHelper
 
 object Constants {
 
+    const  val NOTE: String = "NOTE"
+    const  val ARCHIVE: String = "ARCHIVE"
+    const  val TRASH: String = "TRASH"
+
     const val REQUEST_PERMISSION = 1
     const val REQUEST_SELECT = 2
     const val SHARED_PREF = "SHARED_PREF"

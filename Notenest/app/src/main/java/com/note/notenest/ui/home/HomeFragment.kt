@@ -8,6 +8,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -75,13 +76,12 @@ class HomeFragment : Fragment() {
 
         noteViewModel.getNoteList().observe(viewLifecycleOwner, {
             it?.let { data ->
-                  noteAdapter.submitList(data)
+                noteAdapter.submitList(data)
 
             }
 
 
         })
-
 
 
     }
@@ -90,6 +90,13 @@ class HomeFragment : Fragment() {
         binding?.fab?.setOnClickListener {
             findNavController().navigate(R.id.action_home_to_createNoteFragment)
         }
+
+        noteAdapter.setOnItemClickListener { note ->
+            val bundle = Bundle()
+            bundle.putParcelable(Constants.NOTE, note)
+            findNavController().navigate(R.id.action_home_to_updateNoteFragment, bundle)
+        }
+
     }
 
 
@@ -290,12 +297,11 @@ class HomeFragment : Fragment() {
                 }
 
 
-
-                noteAdapter.notifyItemRemoved(viewHolder.adapterPosition)
-
-
-
-
+                val temp = viewHolder.adapterPosition
+                val list = noteAdapter.currentList
+                val tempList = list.toMutableList()
+                noteAdapter.submitList(tempList)
+                tempList.removeAt(temp)
             }
 
 
