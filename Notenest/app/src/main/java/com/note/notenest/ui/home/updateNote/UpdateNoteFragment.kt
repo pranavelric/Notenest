@@ -186,11 +186,11 @@ class UpdateNoteFragment : Fragment() {
 
         }
 
-        dialogView.findViewById<TextView>(R.id.sketch).setOnClickListener {
-            context?.toast("Sketch")
-            dialog?.dismiss()
-
-        }
+//        dialogView.findViewById<TextView>(R.id.sketch).setOnClickListener {
+//            context?.toast("Sketch")
+//            dialog?.dismiss()
+//
+//        }
 
 
     }
