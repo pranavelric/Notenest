@@ -35,13 +35,13 @@
     </group>
 
 
-    <group android:id="@+id/grp3"  android:checkableBehavior="single" >
-        <item
-            android:id="@+id/settings"
-            android:icon="@drawable/ic_baseline_settings_24"
-            android:title="Settings" />
+<!--    <group android:id="@+id/grp3"  android:checkableBehavior="single" >-->
+<!--        <item-->
+<!--            android:id="@+id/settings"-->
+<!--            android:icon="@drawable/ic_baseline_settings_24"-->
+<!--            android:title="Settings" />-->
 
-    </group>
+<!--    </group>-->
 
 
 

@@ -7,25 +7,37 @@
 
     </data>
 
-    <androidx.constraintlayout.motion.widget.MotionLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layoutDescription="@xml/fragment_splash_xml_constraintlayout_scene"
-        tools:context=".ui.splash.SplashActivity">
 
+        tools:context=".ui.splash.SplashActivity"
+
+        >
+
+
+        <ImageView
+            android:layout_marginTop="@dimen/_20sdp"
+            android:id="@+id/top_img"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_splash_bg"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/hello_blank_fragment"
-            app:animate="@{true}"
             android:gravity="center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:text="Notenest"
+            android:textColor="@color/amber"
+            android:textSize="@dimen/_13sdp"
+            android:textStyle="bold"
+            app:animate="@{true}"
+            app:layout_constraintTop_toBottomOf="@id/top_img" />
 
 
-    </androidx.constraintlayout.motion.widget.MotionLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

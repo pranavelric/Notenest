@@ -15,7 +15,7 @@ import com.note.notenest.utils.transitionAnimationBundle
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.activity_splash)
+
 
 
 
@@ -24,7 +24,7 @@ class SplashActivity : AppCompatActivity() {
             DataBindingUtil.setContentView(this, R.layout.activity_splash)
 
 
-        CoroutinesHelper.mainWithDelay(1000) {
+        CoroutinesHelper.mainWithDelay(1600) {
             Intent(this, MainActivity::class.java).also {
                 it.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                 this.startActivity(it, transitionAnimationBundle())

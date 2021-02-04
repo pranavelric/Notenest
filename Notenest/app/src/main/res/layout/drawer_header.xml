@@ -4,18 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/amber"
+
     >
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="@dimen/_140sdp"
-        android:src="@color/amber"
-       app:layout_constraintBottom_toTopOf="@+id/title"
+        android:src="@drawable/ic_logo"
+        app:layout_constraintBottom_toTopOf="@+id/title"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/title"
-        android:text="Notenest"
+        android:text=""
         android:textStyle="bold"
         android:textSize="@dimen/_20sdp"
         android:layout_marginStart="@dimen/_20sdp"

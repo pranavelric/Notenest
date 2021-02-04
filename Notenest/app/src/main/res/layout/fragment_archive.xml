@@ -20,5 +20,35 @@
             android:layoutAnimation="@anim/layout_animation_fade_in"
             />
 
+        <LinearLayout
+            android:id="@+id/empty_list_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/_10sdp"
+            android:visibility="gone"
+            >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_archive_bg" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="No notes in trash"
+                android:textSize="@dimen/_16sdp"
+
+                />
+
+
+        </LinearLayout>
+
+
+
+
     </FrameLayout>
 </layout>

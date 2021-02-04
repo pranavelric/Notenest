@@ -10,7 +10,9 @@ import com.note.notenest.adapters.TrashAdapter
 import com.note.notenest.databinding.FragmentTrashBinding
 import com.note.notenest.ui.main.MainActivity
 import com.note.notenest.utils.Constants
+import com.note.notenest.utils.gone
 import com.note.notenest.utils.hideSoftKeyboard
+import com.note.notenest.utils.visible
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -56,7 +58,18 @@ class TrashFragment : Fragment() {
         (activity as MainActivity).noteViewModel.getTrashData().observe(
             viewLifecycleOwner, {
                 it?.let { data ->
+
+                    if (data.isEmpty()) {
+                        binding.emptyListBg.visible()
+
+                    } else {
+                        binding.emptyListBg.gone()
+
+                    }
+
                     trashAdapter.submitList(data)
+
+
                 }
             }
         )
@@ -71,7 +84,6 @@ class TrashFragment : Fragment() {
         menu.findItem(R.id.menu_main_delete_all).setEnabled(true).isVisible = true
 
     }
-
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -96,14 +108,12 @@ class TrashFragment : Fragment() {
 
         binding.trashRec.apply {
             adapter = trashAdapter
-            layoutManager=   StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         }
         binding.trashRec.scheduleLayoutAnimation()
 
 
     }
-
-
 
 
 }

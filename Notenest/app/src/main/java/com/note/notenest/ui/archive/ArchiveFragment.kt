@@ -14,9 +14,7 @@ import com.note.notenest.adapters.ArchiveAdapter
 import com.note.notenest.data.models.NoteModel
 import com.note.notenest.databinding.FragmentArchiveBinding
 import com.note.notenest.ui.main.MainActivity
-import com.note.notenest.utils.Constants
-import com.note.notenest.utils.MySharedPrefrences
-import com.note.notenest.utils.hideSoftKeyboard
+import com.note.notenest.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -71,6 +69,16 @@ class ArchiveFragment : Fragment() {
         (activity as MainActivity).noteViewModel.getArchiveItem().observe(
             viewLifecycleOwner, {
                 it?.let { data ->
+
+                    if (data.isEmpty()) {
+                        binding.emptyListBg.visible()
+
+                    } else {
+                        binding.emptyListBg.gone()
+
+                    }
+
+
                     archiveAdapter.submitList(data)
                 }
             }

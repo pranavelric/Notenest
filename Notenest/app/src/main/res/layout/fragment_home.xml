@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -16,15 +16,14 @@
             android:id="@+id/notes_rec"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/rec_note_item"
             android:layoutAnimation="@anim/layout_animation_fade_in"
-            />
+            tools:listitem="@layout/rec_note_item" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-android:layout_margin="@dimen/_16sdp"
-            android:id="@+id/fab"
+            android:layout_margin="@dimen/_16sdp"
 
 
             android:backgroundTint="@color/amber"
@@ -32,6 +31,32 @@ android:layout_margin="@dimen/_16sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
+
+        <LinearLayout
+            android:id="@+id/empty_list_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/_10sdp"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_notes_bg" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Your notes will appear here "
+                android:textSize="@dimen/_16sdp"
+
+                />
+
+
+        </LinearLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

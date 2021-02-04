@@ -20,14 +20,11 @@ import com.note.notenest.data.models.ArchiveModel
 import com.note.notenest.data.models.NoteModel
 import com.note.notenest.data.models.TrashModel
 import com.note.notenest.databinding.FragmentHomeBinding
-import com.note.notenest.utils.Constants
+import com.note.notenest.utils.*
 import com.note.notenest.utils.Constants.NOTE_TO_ARCHIVE
 import com.note.notenest.utils.Constants.NOTE_TO_TRASH
 import com.note.notenest.utils.Constants.SWIPE_ARCHIVE
 import com.note.notenest.utils.Constants.SWIPE_DELETE
-import com.note.notenest.utils.MySharedPrefrences
-import com.note.notenest.utils.SwipeItem
-import com.note.notenest.utils.hideSoftKeyboard
 import com.note.notenest.viewModels.NoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -76,6 +73,17 @@ class HomeFragment : Fragment() {
 
         noteViewModel.getNoteList().observe(viewLifecycleOwner, {
             it?.let { data ->
+
+
+                if (data.isEmpty()) {
+                    binding?.emptyListBg?.visible()
+
+                } else {
+                    binding?.emptyListBg?.gone()
+
+                }
+
+
                 noteAdapter.submitList(data)
 
             }
