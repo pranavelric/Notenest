@@ -327,6 +327,7 @@ class UpdateNoteFragment : Fragment() {
                 context?.shareNotes(
                     binding.editTextTitle.text.toString(),
                     binding.editTextBody.text.toString()
+                ,    selectImagePath
                 )
             }
             R.id.color -> {

@@ -59,21 +59,13 @@ class ArchiveFragment : Fragment() {
     private fun setClickListeneres() {
 
         archiveAdapter.setOnItemClickListener { archiveModel ->
-        //val bundle = Bundle()
-
-          findNavController().navigate(R.id.action_archive_to_updateArchiveFragment)
+            val bundle = Bundle()
+            bundle.putParcelable(Constants.ARCHIVE, archiveModel)
+            findNavController().navigate(R.id.action_archive_to_updateArchiveFragment, bundle)
 
         }
     }
 
-//    private fun setRecyclerView() {
-//
-//        binding.archiveRec.apply {
-//            adapter = archiveAdapter
-//          //  layoutManager=LinearLayoutManager(context)
-//        }
-//
-//    }
 
     private fun getData() {
         (activity as MainActivity).noteViewModel.getArchiveItem().observe(
@@ -85,8 +77,6 @@ class ArchiveFragment : Fragment() {
         )
 
     }
-
-
 
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -148,53 +138,49 @@ class ArchiveFragment : Fragment() {
             R.id.menu_main_grid -> changeLayoutView(false)
 
             R.id.menu_main_delete_all -> {
-                context?.let {   (activity as MainActivity).noteViewModel.emptyDatabase(it, Constants.ARCHIVE_EMPTY) }
+                context?.let {
+                    (activity as MainActivity).noteViewModel.emptyDatabase(
+                        it,
+                        Constants.ARCHIVE_EMPTY
+                    )
+                }
             }
 
         }
 
         return super.onOptionsItemSelected(item)
     }
+
     private fun changeLayoutView(change: Boolean) {
         sharedPref.setArchiveLayout(change)
-       archiveAdapter.notifyDataSetChanged()
+        archiveAdapter.notifyDataSetChanged()
 
         setupRecyclerView()
         requireActivity().invalidateOptionsMenu()
 
     }
+
     private fun setupRecyclerView() {
         when (sharedPref.getArchiveLayout()) {
-            true ->   binding.archiveRec.layoutManager = LinearLayoutManager(context)
-            false ->   binding.archiveRec.layoutManager =  StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            true -> binding.archiveRec.layoutManager = LinearLayoutManager(context)
+            false -> binding.archiveRec.layoutManager =
+                StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         }
         binding.archiveRec.apply {
             adapter = archiveAdapter
-         //   layoutManager=LinearLayoutManager(context)
         }
         binding.archiveRec.scheduleLayoutAnimation()
 
 
-
-
     }
+
     private fun searchTroughDatabase(query: String) {
-        (activity as MainActivity).noteViewModel.searchArchiveDatabase(query).observe(this, { list ->
-            list?.let { archiveAdapter.submitList(it) }
-        })
+        (activity as MainActivity).noteViewModel.searchArchiveDatabase(query)
+            .observe(this, { list ->
+                list?.let { archiveAdapter.submitList(it) }
+            })
 
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

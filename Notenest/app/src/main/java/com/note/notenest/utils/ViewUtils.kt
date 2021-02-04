@@ -2,8 +2,10 @@ package com.note.notenest.utils
 
 import android.app.Activity
 import android.app.ActivityOptions
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -11,8 +13,8 @@ import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.ProgressBar
 import android.widget.Toast
-import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
+
 import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.afollestad.materialdialogs.LayoutMode
@@ -22,6 +24,7 @@ import com.afollestad.materialdialogs.color.colorChooser
 import com.google.android.material.snackbar.Snackbar
 import com.note.notenest.BuildConfig
 import com.note.notenest.R
+
 
 
 fun Context.toast(message: String) {
@@ -75,6 +78,36 @@ fun Activity.setFullScreenWithBtmNav() {
 
 }
 
+fun Context.rate() {
+
+    try {
+        this.startActivity(
+            Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse(
+                    ("market://details?id=" + BuildConfig.APPLICATION_ID)
+                )
+            ))
+    } catch (e1: ActivityNotFoundException) {
+        try {
+            this.startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("http://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID)
+                )
+            )
+        } catch (e2: ActivityNotFoundException) {
+            Toast.makeText(
+                this,
+                "You don't have any app that can open this link",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
+
+}
+
 fun Context.share() {
 
 
@@ -101,12 +134,22 @@ fun Context.share() {
 }
 
 
-fun Context.shareNotes(title: String, text: String) {
+fun Context.shareNotes(title: String, text: String,url:String?) {
 
     try {
         val shareIntent = Intent(Intent.ACTION_SEND)
-        shareIntent.type = "text/plain"
+
+        if(url!=null || url!=""){
+
+        shareIntent.putExtra(Intent.EXTRA_STREAM,Uri.parse(url))
+        }
+
+       // shareIntent.type = "text/plain"
+        shareIntent.type = "*/*"
+
+
         shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Notenest")
+
         var shareMessage = "\n${title}\n"
         shareMessage =
             """
@@ -228,7 +271,7 @@ fun Context.changeNoteBackgroundColor(view: View) {
 }
 
 
-fun Context.discardDialog(from:String, view: View) {
+fun Context.discardDialog(from: String, view: View) {
     MaterialDialog(this, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
         title(R.string.dialog_discard)
         message(R.string.dialog_discard_confirmation)

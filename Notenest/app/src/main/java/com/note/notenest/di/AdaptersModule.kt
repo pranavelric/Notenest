@@ -2,6 +2,7 @@ package com.note.notenest.di
 
 import com.note.notenest.adapters.ArchiveAdapter
 import com.note.notenest.adapters.NoteAdapter
+import com.note.notenest.adapters.TrashAdapter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,6 +22,11 @@ class AdaptersModule {
     fun providesArchiveNoteAdapter(): ArchiveAdapter {
         return ArchiveAdapter()
     }
+    @Provides
+    fun providesTrashNoteAdapter(): TrashAdapter {
+        return TrashAdapter()
+    }
+
 
 
 }

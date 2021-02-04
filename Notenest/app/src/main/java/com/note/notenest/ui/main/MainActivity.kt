@@ -12,6 +12,8 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.note.notenest.R
 import com.note.notenest.databinding.ActivityMainBinding
+import com.note.notenest.utils.rate
+import com.note.notenest.utils.share
 import com.note.notenest.viewModels.NoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,7 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
 
-     val noteViewModel: NoteViewModel by lazy {
+    val noteViewModel: NoteViewModel by lazy {
         ViewModelProvider(this)[NoteViewModel::class.java]
     }
 
@@ -48,6 +50,30 @@ class MainActivity : AppCompatActivity() {
     private fun setupDrawerLayout() {
         binding.navView.setupWithNavController(navController)
         NavigationUI.setupActionBarWithNavController(this, navController, binding.drawerLayout)
+
+        binding.navView.setNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.share -> {
+                    share()
+                    true
+                }
+                R.id.rate -> {
+rate()
+                    true
+                }
+
+                else -> {
+                    false
+                }
+            }
+
+            binding.drawerLayout.closeDrawer(GravityCompat.START);
+            NavigationUI.onNavDestinationSelected(it, navController);
+
+
+        }
+
+
     }
 
 
@@ -63,8 +89,6 @@ class MainActivity : AppCompatActivity() {
             super.onBackPressed()
         }
     }
-
-
 
 
 }

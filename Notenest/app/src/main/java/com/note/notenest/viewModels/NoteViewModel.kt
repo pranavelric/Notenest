@@ -61,9 +61,6 @@ class NoteViewModel @ViewModelInject constructor(val myRepo: NoteRepository) : V
     }
 
 
-
-
-
     fun searchArchiveDatabase(query: String): LiveData<List<ArchiveModel>> {
         if (query != "")
             return myRepo.searchArchiveDatabase("%" + query + "%")
@@ -89,11 +86,12 @@ class NoteViewModel @ViewModelInject constructor(val myRepo: NoteRepository) : V
     }
 
 
+    fun getTrashData() = myRepo.getTrashDatabase
     private fun addTrashItem(trashItem: TrashModel) = viewModelScope.launch {
         myRepo.insertTrashItem(trashItem)
     }
 
-    private fun deleteTrashItem(trashItem: TrashModel) = viewModelScope.launch {
+     fun deleteTrashItem(trashItem: TrashModel) = viewModelScope.launch {
         myRepo.deleteTrashItem(trashItem)
     }
 
@@ -198,7 +196,7 @@ class NoteViewModel @ViewModelInject constructor(val myRepo: NoteRepository) : V
 
                 // Navigate back.
                 view.findNavController().navigateUp()
-                //      .navigate(R.id.action_archiveUpdateFragment_to_archiveFragment)
+
             }
             ARCHIVE_TO_TRASH -> {
                 deleteArchiveItem(archiveItem)
@@ -210,7 +208,7 @@ class NoteViewModel @ViewModelInject constructor(val myRepo: NoteRepository) : V
                 }
 
                 view.findNavController().navigateUp()
-                //      .navigate(R.id.action_archiveUpdateFragment_to_archiveFragment)
+
             }
             TRASH_TO_NOTE -> {
                 deleteTrashItem(trashItem)
@@ -222,7 +220,7 @@ class NoteViewModel @ViewModelInject constructor(val myRepo: NoteRepository) : V
                 }
 
                 view.findNavController().navigateUp()
-                //.navigate(R.id.action_trashUpdateFragment_to_trashFragment)
+
             }
 
             TRASH_TO_NOTE_EDIT -> {
@@ -240,7 +238,7 @@ class NoteViewModel @ViewModelInject constructor(val myRepo: NoteRepository) : V
                     }.show()
 
                     view.findNavController().navigateUp()
-                    //     .navigate(R.id.action_trashUpdateFragment_to_trashFragment)
+
                 }
             }
         }
