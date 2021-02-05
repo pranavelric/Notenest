@@ -1,6 +1,6 @@
 # Notenest
 
-Notenest is an easy-to-use, intuitive, fast, elegant app to create notes Notenest has an easy to use simple interface. You can easily record thoughts and share them with friends and relatives.
+Notenest is an easy-to-use, intuitive, fast, elegant app to create notes. Notenest has an easy to use simple interface. You can easily record thoughts and share them with friends and relatives.
 
 
 ## Key features
