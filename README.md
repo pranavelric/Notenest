@@ -3,6 +3,12 @@
 Notenest is an easy-to-use, intuitive, fast, elegant app to create notes. Notenest has an easy to use simple interface. You can easily record thoughts and share them with friends and relatives.
 
 
+<a href="https://play.google.com/store/apps/details?id=com.note.notenest">
+<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" width="200px">
+</a>
+
+
+
 ## Key features
 - ✔️: Save, browse, search and share notes
 - ✔️: List/Grid View
